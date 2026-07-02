@@ -1,67 +1,37 @@
-import { StatusBar, Text, View } from "react-native";
-import PrimaryButton from "../components/common/PrimaryButton";
-import COLORS from "../theme/colors";
+// import { StyleSheet, View } from "react-native";
+// import Logo from "../components/common/Logo";
+// import PrimaryButton from "../components/common/PrimaryButton";
+// import Screen from "../components/layout/Screen";
 
-export default function Home() {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.background} />
+import { Redirect } from "expo-router";
 
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: COLORS.background,
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 24,
-        }}
-      >
-        <Text
-          style={{
-            color: COLORS.prmary,
-            fontSize: 40,
-            fontWeight: "bold",
-          }}
-        >
-          PocketRadar
-        </Text>
-
-        <Text
-          style={{
-            marginTop: 12,
-            fontSize: 18,
-            color: COLORS.text,
-            textAlign: "center",
-          }}
-        >
-          Spend Smarter
-        </Text>
-
-        <Text
-          style={{
-            fontSize: 18,
-            color: COLORS.text,
-            textAlign: "center",
-          }}
-        >
-          Save Better.
-        </Text>
-
-        <View
-          style={{
-            width: "100%",
-            marginTop: 32,
-            alignItems: "center",
-          }}
-        >
-          <PrimaryButton
-            title="Get Started"
-            onPress={() => {
-              console.log("Get Started");
-            }}
-          />
-        </View>
-      </View>
-    </>
-  );
+export default function Index() {
+  return <Redirect href="/onboarding" />;
 }
+// export default function Home() {
+//   return (
+//     <Screen>
+//       <View style={styles.container}>
+//         <Logo />
+
+//         <View style={styles.buttonContainer}>
+//           <PrimaryButton title="Get Started" onPress={() => {}} />
+//         </View>
+//       </View>
+//     </Screen>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     padding: 24,
+//   },
+
+//   buttonContainer: {
+//     width: "100%",
+//     marginTop: 60,
+//   },
+// });
