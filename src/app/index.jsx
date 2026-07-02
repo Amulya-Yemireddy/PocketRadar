@@ -1,4 +1,5 @@
 import { StatusBar, Text, View } from "react-native";
+import PrimaryButton from "../components/common/PrimaryButton";
 import COLORS from "../theme/colors";
 
 export default function Home() {
@@ -45,6 +46,21 @@ export default function Home() {
         >
           Save Better.
         </Text>
+
+        <View
+          style={{
+            width: "100%",
+            marginTop: 32,
+            alignItems: "center",
+          }}
+        >
+          <PrimaryButton
+            title="Get Started"
+            onPress={() => {
+              console.log("Get Started");
+            }}
+          />
+        </View>
       </View>
     </>
   );
