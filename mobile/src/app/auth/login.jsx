@@ -9,15 +9,11 @@ import AuthInput from "../../features/auth/components/AuthInput";
 import PasswordInput from "../../features/auth/components/PasswordInput";
 
 import { Controller } from "react-hook-form";
-
+import { login } from "../../services/authApi";
 import { loginSchema } from "../../features/auth/validation";
 
 export default function Login() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const {control, handleSubmit, formState: { errors },} = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -25,9 +21,31 @@ export default function Login() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data);
-  };
+  const onSubmit = async (data) => {
+  try {
+    const result = await login(
+      data.email,
+      data.password
+    );
+
+    console.log("Result:", result);
+
+  } catch (error) {
+  console.log("FULL ERROR:");
+  console.log(error);
+
+  console.log("MESSAGE:");
+  console.log(error.message);
+
+  console.log("RESPONSE:");
+  console.log(error.response);
+
+  console.log("REQUEST:");
+  console.log(error.request);
+
+  }
+};
+
   return (
     <Screen>
       <View style={styles.container}>
