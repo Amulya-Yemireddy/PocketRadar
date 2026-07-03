@@ -7,9 +7,12 @@ export const register = async (req, res) => {
     res.status(201).json(new ApiResponse(
       201,
       {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
+        token: user.token,
+        user: {
+          id: user.user._id,
+          fullName: user.user.fullName,
+          email: user.user.email,
+        },
       },
       'User registered successfully'
     ));

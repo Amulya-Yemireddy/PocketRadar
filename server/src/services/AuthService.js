@@ -5,7 +5,8 @@ import ApiError from "../utils/ApiError.js";
 
 export const registerUser = async ({ fullName, email, password }) => {
   // Check if user already exists
-  const existingUser = await User.findOne({ email });
+  const normalizedEmail = email.toLowerCase();
+  const existingUser = await User.findOne({ email: normalizedEmail });
 
   if (existingUser) {
     throw new ApiError(409,"User already exists");
@@ -17,11 +18,16 @@ export const registerUser = async ({ fullName, email, password }) => {
   // Create user
   const user = await User.create({
     fullName,
-    email,
+    email: normalizedEmail,
     password: hashedPassword,
   });
 
-  return user;
+  const token = generateToken(user._id);
+
+return {
+  token,
+  user,
+};
 };
 
 export const loginUser = async ({ email, password }) => {

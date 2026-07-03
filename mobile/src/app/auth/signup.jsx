@@ -9,17 +9,19 @@ import AuthInput from "../../features/auth/components/AuthInput";
 import PasswordInput from "../../features/auth/components/PasswordInput";
 
 import { Controller } from "react-hook-form";
-import { loginSchema } from "../../features/auth/validation";
+import { signupSchema } from "../../features/auth/validation";
 import { useAuth } from "../../context/AuthContext";
 import { router } from "expo-router";
 import * as authApi  from "../../services/authApi";
 
-export default function Login() {
+export default function Signup() {
   const {control, handleSubmit, formState: { errors },} = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signupSchema),
     defaultValues: {
-      email: "",
-      password: "",
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
     },
   });
 
@@ -27,7 +29,8 @@ export default function Login() {
 
   const onSubmit = async (data) => {
   try {
-    const result = await authApi.login(
+    const result = await authApi.register(
+      data.fullName,
       data.email,
       data.password
     );
@@ -46,10 +49,23 @@ export default function Login() {
     <Screen scrollable keyboardAware >
       <View style={styles.container}>
         <AuthHeader
-          greeting="Good to see you again."
-          title="Welcome Back 👋"
-          subtitle="Sign in to continue managing your finances."
+          greeting="Welcome!"
+          title="Create Account"
+          subtitle="Create your PocketRadar account."
         />
+        <Controller
+  control={control}
+  name="fullName"
+  render={({ field: { onChange, value } }) => (
+    <AuthInput
+      label="Full Name"
+      placeholder="Enter your full name"
+      value={value}
+      onChangeText={onChange}
+      error={errors.fullName?.message}
+    />
+  )}
+/>
 
         <Controller
           control={control}
@@ -79,18 +95,30 @@ export default function Login() {
           )}
         />
 
-        <Pressable>
-          <Text style={styles.forgot}>Forgot Password?</Text>
-        </Pressable>
+        <Controller
+  control={control}
+  name="confirmPassword"
+  render={({ field: { onChange, value } }) => (
+    <PasswordInput
+      label="Confirm Password"
+      placeholder="Confirm your password"
+      value={value}
+      onChangeText={onChange}
+      error={errors.confirmPassword?.message}
+    />
+  )}
+/>
 
-        <PrimaryButton title="Sign In" onPress={handleSubmit(onSubmit)} />
+
+        <PrimaryButton title="Create Account" onPress={handleSubmit(onSubmit)} />
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account?</Text>
+          <Text style={styles.footerText}>Already have an account?</Text>
 
-          <Pressable onPress={() => router.replace("/auth/signup")}>
-            <Text style={styles.signup}>Create Account</Text>
+          <Pressable  onPress={() => router.replace("/auth/login")}>
+            <Text style={styles.signup}>Sign In</Text>
           </Pressable>
+          
         </View>
       </View>
     </Screen>
