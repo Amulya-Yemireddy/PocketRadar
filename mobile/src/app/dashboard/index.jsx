@@ -16,6 +16,7 @@ import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
 import * as dashboardApi from "../../services/dashboardApi";
+import RecentTransactions from "../../features/dashboard/components/RecentTransactions";
 
 import {
   Wallet,
@@ -90,6 +91,9 @@ export default function Dashboard() {
       </View>
 
       <BudgetProgress />
+      <RecentTransactions
+        transactions={summary?.recentTransactions ?? []}
+      />
       <Pressable
   style={styles.fab}
   onPress={() => router.push("/expense/add")}
