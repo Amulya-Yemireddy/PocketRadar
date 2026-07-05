@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-
+import { ArrowDownLeft, ArrowUpRight } from "lucide-react-native";
+import { formatDate } from "../../../utils/formatDate";
 import COLORS from "../../../theme/colors";
 import SPACING from "../../../theme/spacing";
 
@@ -8,12 +9,28 @@ export default function TransactionItem({ transaction }) {
 
   return (
     <View style={styles.container}>
-      {/* Left Side */}
       <View style={styles.left}>
-        <View style={styles.icon}>
-          <Text style={styles.iconText}>
-            {isExpense ? "💸" : "💰"}
-          </Text>
+        <View
+          style={[
+            styles.iconContainer,
+            {
+              backgroundColor: isExpense
+                ? "#FEE2E2"
+                : "#DCFCE7",
+            },
+          ]}
+        >
+          {isExpense ? (
+            <ArrowDownLeft
+              color="#DC2626"
+              size={20}
+            />
+          ) : (
+            <ArrowUpRight
+              color="#16A34A"
+              size={20}
+            />
+          )}
         </View>
 
         <View>
@@ -24,10 +41,13 @@ export default function TransactionItem({ transaction }) {
           <Text style={styles.category}>
             {transaction.category}
           </Text>
+
+            <Text style={styles.date}>
+                {formatDate(transaction.date)}
+            </Text>
         </View>
       </View>
 
-      {/* Right Side */}
       <Text
         style={[
           styles.amount,
@@ -46,6 +66,11 @@ export default function TransactionItem({ transaction }) {
 }
 
 const styles = StyleSheet.create({
+    date: {
+        marginTop:2,
+        color:COLORS.textSecondary,
+        fontSize:12,
+    },
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -59,12 +84,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  icon: {
+  iconContainer: {
     width: 44,
     height: 44,
     borderRadius: 22,
-
-    backgroundColor: "#F3F4F6",
 
     justifyContent: "center",
     alignItems: "center",
@@ -72,13 +95,9 @@ const styles = StyleSheet.create({
     marginRight: SPACING.md,
   },
 
-  iconText: {
-    fontSize: 20,
-  },
-
   title: {
-    fontWeight: "600",
     fontSize: 16,
+    fontWeight: "600",
     color: COLORS.text,
   },
 
@@ -88,7 +107,7 @@ const styles = StyleSheet.create({
   },
 
   amount: {
-    fontWeight: "700",
     fontSize: 16,
+    fontWeight: "700",
   },
 });

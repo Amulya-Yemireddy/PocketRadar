@@ -16,3 +16,13 @@ export const createExpense = async (
 
   return response.data;
 };
+
+export const getExpenses = async (token) => {
+  const response = await api.get("/expenses", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};

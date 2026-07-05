@@ -5,8 +5,14 @@ import SHADOWS from "../../../theme/shadows";
 import SPACING from "../../../theme/spacing";
 import RADIUS from "../../../theme/radius";
 
-export default function BudgetProgress() {
-  const progress = 48;
+export default function BudgetProgress({
+  spent,
+  budget,
+}) {
+  const progress =
+  budget > 0
+    ? (spent / budget) * 100
+    : 0;
 
   return (
     <View style={styles.card}>
@@ -19,14 +25,14 @@ export default function BudgetProgress() {
           style={[
             styles.fill,
             {
-              width: `${progress}%`,
+              width: `${Math.min(progress, 100)}%`,
             },
           ]}
         />
       </View>
 
       <Text style={styles.text}>
-        ₹7,150 spent of ₹15,000
+        ₹{spent.toLocaleString()} spent of ₹{budget.toLocaleString()}
       </Text>
     </View>
   );

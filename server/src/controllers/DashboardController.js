@@ -5,11 +5,11 @@ export const getDashboard = async (req, res) => {
 
   // Fetch all transactions for this user
   const expenses = await Expense.find({
-    user: req.user._id,
-})
-.select("-user -__v")
-.sort({ date: -1 })
-.lean();
+      user: req.user._id,
+  })
+  .select("-user -__v")
+  .sort({ date: -1 })
+  .lean();
 
   // Separate income and expenses
   const income = expenses
@@ -22,20 +22,25 @@ export const getDashboard = async (req, res) => {
 
   // Available balance
   const balance = income - totalExpenses;
+  // Currently savings is the same as balance.
+  // Later, when we add bank accounts and investments,
+  // this calculation will become more advanced.
+  const savings = balance;
 
   // Only send latest 5 transactions
   const recentTransactions = expenses.slice(0, 5);
 
   res.status(200).json(
-    new ApiResponse(
-      200,
-      {
-        balance,
-        income,
-        expenses: totalExpenses,
-        recentTransactions,
-      },
-      "Dashboard loaded successfully"
-    )
-  );
+  new ApiResponse(
+    200,
+    {
+      balance,
+      income,
+      expenses: totalExpenses,
+      savings,
+      recentTransactions,
+    },
+    "Dashboard loaded successfully"
+  )
+);
 };

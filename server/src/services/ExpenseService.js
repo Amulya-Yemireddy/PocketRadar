@@ -25,7 +25,10 @@ export const createExpense = async (userId, expenseData) => {
 export const getExpenses = async (userId) => {
   return await Expense.find({
     user: userId,
-  }).sort({
-    date: -1,
-  });
+  })
+    .select("-user -__v")
+    .sort({
+      date: -1,
+    })
+    .lean();
 };

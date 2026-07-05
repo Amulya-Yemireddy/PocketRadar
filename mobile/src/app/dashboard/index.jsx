@@ -7,7 +7,7 @@ import {
 
 import Screen from "../../components/layout/Screen";
 import { Pressable } from "react-native";
-import { Plus } from "lucide-react-native";
+import { Plus,Wallet,TrendingUp,Receipt,PiggyBank } from "lucide-react-native";
 import { router } from "expo-router";
 import WelcomeCard from "../../features/dashboard/components/WelcomeCard";
 import SummaryCard from "../../features/dashboard/components/SummaryCard";
@@ -18,11 +18,6 @@ import { useAuth } from "../../context/AuthContext";
 import * as dashboardApi from "../../services/dashboardApi";
 import RecentTransactions from "../../features/dashboard/components/RecentTransactions";
 
-import {
-  Wallet,
-  TrendingUp,
-  Receipt,
-} from "lucide-react-native";
 
 export default function Dashboard() {
   const { token, user } = useAuth();
@@ -88,9 +83,20 @@ export default function Dashboard() {
           subtitle="This Month"
           color="#DC2626"
         />
+
+        <SummaryCard
+          icon={PiggyBank}
+          title="Savings"
+          amount={summary?.savings ?? 0}
+          subtitle="Available"
+          color="#9333EA"
+        />
       </View>
 
-      <BudgetProgress />
+      <BudgetProgress
+        spent={summary?.expenses ?? 0}
+        budget={15000}
+      />
       <RecentTransactions
         transactions={summary?.recentTransactions ?? []}
       />

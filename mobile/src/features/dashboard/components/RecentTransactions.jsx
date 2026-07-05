@@ -1,23 +1,35 @@
-import { StyleSheet, Text, View } from "react-native";
-
-import TransactionItem from "./TransactionItem";
-
+import { StyleSheet, Text, View, Pressable} from "react-native";
+import { router } from "expo-router";
 import COLORS from "../../../theme/colors";
 import SPACING from "../../../theme/spacing";
+
+import TransactionItem from "../../transactions/components/TransactionItem";
 
 export default function RecentTransactions({
   transactions,
 }) {
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
       <Text style={styles.heading}>
         Recent Transactions
       </Text>
 
-      {transactions.length === 0 ? (
-        <Text style={styles.empty}>
-          No transactions yet.
+      <Pressable
+        onPress={() =>
+          router.push("/transactions")
+        }
+      >
+        <Text style={styles.viewAll}>
+          View All
         </Text>
+      </Pressable>
+    </View>
+
+      {transactions.length === 0 ? (
+        <EmptyState
+          title="No transactions yet."
+        />
       ) : (
         transactions.map((transaction) => (
           <TransactionItem
@@ -45,9 +57,20 @@ const styles = StyleSheet.create({
   },
 
   empty: {
-    color: COLORS.textSecondary,
     textAlign: "center",
 
-    marginVertical: SPACING.lg,
+    color: COLORS.textSecondary,
+
+    paddingVertical: SPACING.xl,
   },
+  header: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+},
+
+viewAll: {
+  color: "#2563EB",
+  fontWeight: "600",
+},
 });
