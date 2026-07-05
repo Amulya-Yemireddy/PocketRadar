@@ -38,3 +38,18 @@ export const login = async (req, res) => {
       "Login successful"
     ));
 };
+
+export const getMe = async (req, res) => {
+    const user = req.user;
+    res.status(200).json(new ApiResponse(
+        200,
+        {
+        id: req.user._id,
+        fullName: req.user.fullName,
+        email: req.user.email,
+      },
+        "User data retrieved successfully"
+    ));
+
+  
+};

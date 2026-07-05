@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
+import * as authApi from "../services/authApi";
 
 export const AuthContext = createContext();
 
@@ -12,19 +13,59 @@ export function AuthProvider({ children }) {
     loadAuth();
   }, []);
 
-  const loadAuth = async () => {
-    try {
-      const savedToken = await SecureStore.getItemAsync("token");
-      const savedUser = await SecureStore.getItemAsync("user");
+const loadAuth = async () => {
+  try {
+    const savedToken = await SecureStore.getItemAsync("token");
 
-      if (savedToken && savedUser) {
-        setToken(savedToken);
-        setUser(JSON.parse(savedUser));
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    // No token = definitely not logged in.
+    if (!savedToken) return;
+
+    /*
+      Ask the backend:
+      "Is this token still valid?"
+
+      We DO NOT trust SecureStore blindly.
+    */
+    const result = await authApi.getMe(savedToken);
+
+    /*
+      Backend says the token is valid.
+
+      Save the fresh user returned by the server.
+    */
+    setToken(savedToken);
+    setUser(result.data);
+
+    /*
+      Optional:
+      Update SecureStore with the latest user.
+      Useful if the user changes their name later.
+    */
+    await SecureStore.setItemAsync(
+      "user",
+      JSON.stringify(result.data)
+    );
+
+  } catch (error) {
+    /*
+      Something went wrong.
+
+      Examples:
+      - Token expired
+      - User deleted
+      - JWT invalid
+
+      Clear everything and force a fresh login.
+    */
+    await SecureStore.deleteItemAsync("token");
+    await SecureStore.deleteItemAsync("user");
+
+    setToken(null);
+    setUser(null);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const login = async (token, user) => {
   await SecureStore.setItemAsync("token", token);

@@ -19,3 +19,13 @@ export const register = async (fullName, email, password) => {
 
   return response.data;
 };
+
+export const getMe = async (token) => {
+  const response = await api.get("/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};

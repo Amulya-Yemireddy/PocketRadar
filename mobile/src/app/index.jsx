@@ -31,11 +31,11 @@ export default function Index() {
     );
   }
   if (!hasSeenOnboarding) {
-    return <Redirect href="onboarding" />;
+    return <Redirect href="/onboarding" />;
   }
 
   if (token) {
-    return <Redirect href="/dev" />;
+    return <Redirect href="/dashboard" />;
   }
 
   return <Redirect href="/auth/login" />;

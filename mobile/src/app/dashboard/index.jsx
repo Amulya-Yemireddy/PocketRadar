@@ -1,32 +1,43 @@
-import { View, Text, StyleSheet } from "react-native";
-import { useAuth } from "../../context/AuthContext";
+import { StyleSheet, View } from "react-native";
+
+import Screen from "../../components/layout/Screen";
+
+import WelcomeCard from "../../features/dashboard/components/WelcomeCard";
+import SummaryCard from "../../features/dashboard/components/SummaryCard";
+
+import { dashboardData } from "../../features/dashboard/data";
+import BudgetProgress from "../../features/dashboard/components/BudgetProgress";
 
 export default function Dashboard() {
-  const { user } = useAuth();
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Welcome, {user?.fullName || "User"} 👋
-      </Text>
+    <Screen scrollable>
+      <WelcomeCard
+        name={dashboardData.user.fullName}
+      />
 
-      <Text>
-        Authentication Successful 🎉
-      </Text>
-    </View>
+      
+
+      {/* Responsive 2-column grid */}
+      <View style={styles.grid}>
+        {dashboardData.summaryCards.map((card) => (
+          <SummaryCard
+            key={card.id}
+            {...card}
+          />
+        ))}
+      </View>
+
+      <BudgetProgress />
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  grid: {
+    flexDirection: "row",
 
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    marginBottom: 20,
+    flexWrap: "wrap",
+
+    justifyContent: "space-between",
   },
 });
