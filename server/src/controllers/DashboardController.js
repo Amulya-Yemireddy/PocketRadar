@@ -6,9 +6,10 @@ export const getDashboard = async (req, res) => {
   // Fetch all transactions for this user
   const expenses = await Expense.find({
     user: req.user._id,
-  }).sort({
-    date: -1,
-  });
+})
+.select("-user -__v")
+.sort({ date: -1 })
+.lean();
 
   // Separate income and expenses
   const income = expenses
