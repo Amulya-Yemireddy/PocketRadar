@@ -8,6 +8,7 @@ export default function PrimaryButton({
   onPress,
   disabled = false,
   loading = false,
+  
 }) {
   return (
     <Pressable

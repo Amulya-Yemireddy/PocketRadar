@@ -1,7 +1,7 @@
 import express from "express";
 
 import { authenticate } from "../middleware/authMiddleware.js";
-import { addExpense, fetchExpenses, } from "../controllers/ExpenseController.js";
+import { addExpense, fetchExpenses, fetchExpense, editExpense, removeExpense, } from "../controllers/ExpenseController.js";
 
 const router = express.Router();
 
@@ -13,5 +13,8 @@ const router = express.Router();
 */
 router.post("/", authenticate, addExpense);
 router.get("/", authenticate, fetchExpenses);
+router.get("/:id", authenticate, fetchExpense);
+router.put("/:id", authenticate, editExpense);
+router.delete("/:id", authenticate, removeExpense);
 
 export default router;

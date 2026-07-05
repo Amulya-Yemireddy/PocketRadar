@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react-native";
+import { router } from "expo-router";
 import { formatDate } from "../../../utils/formatDate";
 import COLORS from "../../../theme/colors";
 import SPACING from "../../../theme/spacing";
@@ -8,6 +9,13 @@ export default function TransactionItem({ transaction }) {
   const isExpense = transaction.type === "expense";
 
   return (
+    <Pressable
+  onPress={() =>
+    router.push(
+      `/transactions/${transaction._id}`
+    )
+  }
+>
     <View style={styles.container}>
       <View style={styles.left}>
         <View
@@ -62,6 +70,7 @@ export default function TransactionItem({ transaction }) {
         {transaction.amount.toLocaleString()}
       </Text>
     </View>
+    </Pressable>
   );
 }
 

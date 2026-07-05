@@ -26,3 +26,53 @@ export const getExpenses = async (token) => {
 
   return response.data;
 };
+
+export const getExpense = async (
+  token,
+  expenseId
+) => {
+  const response = await api.get(
+    `/expenses/${expenseId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const updateExpense = async (
+  token,
+  expenseId,
+  expense
+) => {
+  const response = await api.put(
+    `/expenses/${expenseId}`,
+    expense,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const deleteExpense = async (
+  token,
+  id
+) => {
+  const response = await api.delete(
+    `/expenses/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
