@@ -17,12 +17,16 @@ import { useAuth } from "../../context/AuthContext";
 import * as dashboardApi from "../../services/dashboardApi";
 import RecentTransactions from "../../features/dashboard/components/RecentTransactions";
 import LoadingScreen from "../../components/common/LoadingScreen";
+import AnalyticsCard from "../../features/analytics/components/AnalyticsCard";
+import CategoryPieChart from "../../features/analytics/components/CategoryPieChart";
+import useAnalytics from "../../features/analytics/hooks/useAnalytics"; 
 
 export default function Dashboard() {
   const { token, user } = useAuth();
 
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { analytics } = useAnalytics();
 
   useFocusEffect(
   useCallback(() => {
@@ -91,6 +95,11 @@ export default function Dashboard() {
           color="#9333EA"
         />
       </View>
+      <AnalyticsCard>
+        <CategoryPieChart
+          data={analytics}
+        />
+      </AnalyticsCard>
 
       <BudgetProgress
         spent={summary?.expenses ?? 0}
