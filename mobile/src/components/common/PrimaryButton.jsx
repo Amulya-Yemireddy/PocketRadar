@@ -1,31 +1,48 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import COLORS from "../../theme/colors";
 import RADIUS from "../../theme/radius";
 import SPACING from "../../theme/spacing";
+import LoadingScreen from "./LoadingScreen";
 
 export default function PrimaryButton({
   title,
   onPress,
   disabled = false,
   loading = false,
-  
+  variant = "primary",
 }) {
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled || loading}
-      style={[styles.button, disabled && styles.disabledButton]}
+      style={[styles.button, styles[variant], disabled && styles.disabledButton,]}
     >
       {loading ? (
-        <ActivityIndicator color={COLORS.white} />
+         <LoadingScreen />
       ) : (
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text,variant === "secondary" && styles.secondaryText,]}>{title}</Text>
       )}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  secondaryText: {
+    color: COLORS.text,
+},
+  primary: {
+      backgroundColor: COLORS.primary,
+  },
+
+  danger: {
+      backgroundColor: COLORS.danger,
+  },
+
+  secondary: {
+      backgroundColor: COLORS.white,
+      borderWidth: 1,
+      borderColor: COLORS.border,
+  },
   button: {
     width: "100%",
     maxWidth: 320,

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
 } from "react-native";
 
 import Screen from "../../components/layout/Screen";
-
+import LoadingScreen from "../../components/common/LoadingScreen";
 import { useAuth } from "../../context/AuthContext";
 
 import * as expenseApi from "../../services/expenseApi";
@@ -41,12 +40,7 @@ export default function Transactions() {
   if (loading) {
     return (
       <Screen>
-        <ActivityIndicator
-          size="large"
-          style={{
-            marginTop: 100,
-          }}
-        />
+         <LoadingScreen />
       </Screen>
     );
   }

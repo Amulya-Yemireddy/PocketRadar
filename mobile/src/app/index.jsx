@@ -1,8 +1,9 @@
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
+import LoadingScreen from "../components/common/LoadingScreen";
 
 export default function Index() {
   const { loading, token } = useAuth();
@@ -26,7 +27,7 @@ export default function Index() {
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" />
+         <LoadingScreen />
       </View>
     );
   }

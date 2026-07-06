@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   StyleSheet,
   View,
 } from "react-native";
@@ -17,7 +16,7 @@ import { useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
 import * as dashboardApi from "../../services/dashboardApi";
 import RecentTransactions from "../../features/dashboard/components/RecentTransactions";
-
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 export default function Dashboard() {
   const { token, user } = useAuth();
@@ -47,7 +46,7 @@ export default function Dashboard() {
     return (
       <Screen>
         <View style={styles.loading}>
-          <ActivityIndicator size="large" />
+           <LoadingScreen />
         </View>
       </Screen>
     );

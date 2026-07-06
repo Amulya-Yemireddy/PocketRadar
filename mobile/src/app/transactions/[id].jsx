@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   View,Alert, 
@@ -12,7 +11,7 @@ import Screen from "../../components/layout/Screen";
 import { useAuth } from "../../context/AuthContext";
 import * as expenseApi from "../../services/expenseApi";
 import { formatDate } from "../../utils/formatDate";
-
+import LoadingScreen from "../../components/common/LoadingScreen";
 export default function TransactionDetails() {
   const { id } = useLocalSearchParams();
 
@@ -85,7 +84,7 @@ export default function TransactionDetails() {
     return (
       <Screen>
         <View style={styles.loading}>
-          <ActivityIndicator size="large" />
+           <LoadingScreen />
         </View>
       </Screen>
     );
@@ -134,6 +133,7 @@ export default function TransactionDetails() {
         <PrimaryButton
         title="Delete Expense"
         onPress={confirmDelete}
+        variant="danger"
         />
       </View>
     </Screen>

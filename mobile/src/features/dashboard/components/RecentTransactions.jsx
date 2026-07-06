@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable} from "react-native";
 import { router } from "expo-router";
 import COLORS from "../../../theme/colors";
 import SPACING from "../../../theme/spacing";
-
+import EmptyState from "../../../components/common/EmptyState";
 import TransactionItem from "../../transactions/components/TransactionItem";
 
 export default function RecentTransactions({
