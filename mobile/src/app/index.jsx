@@ -36,7 +36,7 @@ export default function Index() {
   }
 
   if (token) {
-    return <Redirect href="/dashboard" />;
+    return <Redirect href="/(tabs)/" />;
   }
 
   return <Redirect href="/auth/login" />;

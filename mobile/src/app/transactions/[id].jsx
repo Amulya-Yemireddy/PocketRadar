@@ -50,7 +50,7 @@ export default function TransactionDetails() {
         expense._id
         );
 
-        router.back();
+        router.replace("/(tabs)/transactions");
 
     } catch (error) {
         console.log(
@@ -89,7 +89,13 @@ export default function TransactionDetails() {
       </Screen>
     );
   }
-
+if (!expense) {
+  return (
+    <Screen>
+      <LoadingScreen />
+    </Screen>
+  );
+}
   return (
     <Screen scrollable>
       <View style={styles.container}>
