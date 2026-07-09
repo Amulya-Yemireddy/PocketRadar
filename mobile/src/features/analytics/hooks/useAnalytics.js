@@ -12,8 +12,10 @@ export default function useAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadAnalytics();
-  }, []);
+    if (token) {
+      loadAnalytics();
+    }
+  }, [token]);
 
   const loadAnalytics = async () => {
     try {
@@ -34,12 +36,12 @@ export default function useAnalytics() {
         const chartData = result.data.map(
         (item, index) => ({
             value: item.total,
-            text: item.category,
+            label: item.category,
             color:
             colors[index % colors.length],
         })
         );
-
+        console.log(chartData);
         setAnalytics(chartData);
 
     } catch (error) {
